@@ -15,6 +15,7 @@ Requirements
 ------------
 * [PHP 7.0](http://php.net/manual/en/migration70.new-features.php)
 * [MySQL 5.7](https://www.mysql.com/)
+* [Symfony 3](http://symfony.com/)
 
 File format
 -----------
