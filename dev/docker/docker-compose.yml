@@ -1,0 +1,19 @@
+version: '2'
+services:
+  import-web:
+    build:
+        context : ../..
+        dockerfile: dev/docker/web/Dockerfile
+    volumes:
+      - ../../:/ImportCsvUser
+    ports:
+       - "2229:22"
+    links:
+      - import-mysql:import-mysql
+
+  import-mysql:
+    image: mysql:5.7
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    ports:
+      - "9306:3306"
