@@ -5,7 +5,6 @@ namespace AppBundle\Model\Csv\Builder;
 
 use AppBundle\Model\Api\Csv\Builder\ReaderFactoryInterface;
 use AppBundle\Model\Api\Csv\Builder\ReaderFilterIteratorFactoryInterface;
-use AppBundle\Model\Api\Csv\Builder\RowFactoryInterface;
 use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
 use AppBundle\Model\Api\Csv\RowFilterInterface;
 use AppBundle\Model\Api\ObjectManagerInterface;
