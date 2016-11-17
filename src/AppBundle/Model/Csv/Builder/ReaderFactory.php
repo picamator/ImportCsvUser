@@ -6,6 +6,7 @@ namespace AppBundle\Model\Csv\Builder;
 use AppBundle\Model\Api\Builder\ReaderFactoryInterface;
 use AppBundle\Model\Api\Csv\Builder\RowFactoryInterface;
 use AppBundle\Model\Api\Csv\ReaderInterface;
+use AppBundle\Model\Api\ObjectManagerInterface;
 
 /**
  * Create Reader

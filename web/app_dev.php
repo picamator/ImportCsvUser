@@ -1,4 +1,5 @@
 <?php
+// @codeCoverageIgnoreStart
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
@@ -28,3 +29,5 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+
+// @codeCoverageIgnoreEnd

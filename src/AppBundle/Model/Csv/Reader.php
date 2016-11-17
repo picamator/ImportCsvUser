@@ -15,11 +15,6 @@ use AppBundle\Model\Api\Csv\ReaderInterface;
 class Reader implements ReaderInterface
 {
     /**
-     * @var string
-     */
-    private $path;
-
-    /**
      * @var RowFactoryInterface
      */
     private $rowFactory;
@@ -66,7 +61,6 @@ class Reader implements ReaderInterface
         string              $delimiter = ',',
         string              $enclosure = '"'
     ) {
-        $this->path         = $path;
         $this->rowFactory   = $rowFactory;
         $this->delimiter    = $delimiter;
         $this->enclosure    = $enclosure;

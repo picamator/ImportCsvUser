@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Model\Api\Repository\ImportUserRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * ImportUser repository

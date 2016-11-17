@@ -5,6 +5,7 @@ namespace AppBundle\Model\Csv\Builder;
 
 use AppBundle\Model\Api\Csv\Builder\RowFactoryInterface;
 use AppBundle\Model\Api\Csv\Data\RowInterface;
+use AppBundle\Model\Api\ObjectManagerInterface;
 
 /**
  * Create Row

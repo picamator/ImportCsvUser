@@ -1,6 +1,7 @@
 {
-    "name": "sergii/stest",
-    "license": "proprietary",
+    "name": "sergii/import-csv-user",
+    "description": "Import user's from CSV file to MySQL database",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {

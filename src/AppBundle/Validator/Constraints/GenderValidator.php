@@ -22,7 +22,7 @@ class GenderValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!empty($value) && !in_array($value, $this->getGenderList())) {
+        if (!empty($value) && !in_array($value, $this->getGenderList($constraint))) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%female%', $constraint->female)
                 ->setParameter('%male%', $constraint->male)
@@ -39,7 +39,7 @@ class GenderValidator extends ConstraintValidator
      */
     private function getGenderList(Constraint $constraint) : array
     {
-        if (!is_null($this->genderList)) {
+        if (is_null($this->genderList)) {
             $this->genderList = [$constraint->female, $constraint->male];
         }
 

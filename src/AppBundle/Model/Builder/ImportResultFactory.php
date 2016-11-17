@@ -5,6 +5,7 @@ namespace AppBundle\Model\Builder;
 
 use AppBundle\Model\Api\Builder\ImportResultFactoryInterface;
 use AppBundle\Model\Api\Data\ImportResultInterface;
+use AppBundle\Model\Api\ObjectManagerInterface;
 
 /**
  * Create Import result
