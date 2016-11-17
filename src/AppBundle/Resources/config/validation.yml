@@ -1,0 +1,11 @@
+AppBundle\Model\Entity\ImportUser:
+  properties:
+    firstName:
+      - NotBlank: ~
+      - Length:
+          min: 1
+          max: 255
+    birthdate:
+      - Date: ~
+    gender:
+      - AppBundle\Validator\Constraints\Gender: ~

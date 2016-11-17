@@ -165,7 +165,7 @@ class ImportUser implements ImportUserInterface
      */
     public function setGender($gender)
     {
-        $this->gender = $gender;
+        $this->gender = !$gender ? : strtolower(trim($gender));
 
         return $this;
     }
@@ -189,7 +189,7 @@ class ImportUser implements ImportUserInterface
      */
     public function setZipCode($zipCode)
     {
-        $this->zipCode = $zipCode;
+        $this->zipCode = !$zipCode ? : strtoupper(trim($zipCode));
 
         return $this;
     }

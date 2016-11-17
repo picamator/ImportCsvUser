@@ -1,6 +1,19 @@
 ImportCsvUser
 =============
 
+[![PHP 7 ready](http://php7ready.timesplinter.ch/picamator/ImportCsvUser/dev/badge.svg)](https://travis-ci.org/picamator/ImportCsvUser)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/945e8dbd-0f8f-42ec-bfc6-7fcd573d0e6e/mini.png)](https://insight.sensiolabs.com/projects/945e8dbd-0f8f-42ec-bfc6-7fcd573d0e6e)
+
+Master
+------
+[![Build Status](https://travis-ci.org/picamator/ImportCsvUser.svg?branch=master)](https://travis-ci.org/picamator/ImportCsvUser)
+[![Coverage Status](https://coveralls.io/repos/github/picamator/ImportCsvUser/badge.svg?branch=master)](https://coveralls.io/github/picamator/ImportCsvUser?branch=master)
+
+Dev
+---
+[![Build Status](https://travis-ci.org/picamator/ImportCsvUser.svg?branch=dev)](https://travis-ci.org/picamator/ImportCsvUser)
+[![Coverage Status](https://coveralls.io/repos/github/picamator/ImportCsvUser/badge.svg?branch=dev)](https://coveralls.io/github/picamator/ImportCsvUser?branch=dev)
+
 ImportCsvUser is a console application to help import User's data from CSV (comma separated value) to MySQL.
 Project is working for specific CSV structure where first row acts as a schema. 
 
@@ -44,23 +57,13 @@ Here is a normalizer list:
 
 Validators
 ----------
-There are two types of validators:
-
-* csv schema
-* data
-
-The csv schema validators prevent file from importing. The data validators skip rows and write the log with keeping process running.
-
-### CSV schema validator
-Validator checks that first column has the proper name and all presents even the optional one.
-
-### Data validator
+The data validators skip rows and write the report result with keeping process running.
 
 There is a list of validators:
 
-* firstname: required
-* gender: empty, `m` or `f`
-* birthday: empty, or `yyyy-mm-dd`
+* `firstname`: required
+* `gender`: empty, `m` or `f`
+* `birthday`: empty, or `yyyy-mm-dd`
 
 Import result
 -------------
