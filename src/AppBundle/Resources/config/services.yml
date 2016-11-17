@@ -36,7 +36,7 @@ services:
 
   csv_builder_reader_iteration_factory:
     class: AppBundle\Model\Csv\Builder\ReaderFilterIteratorFactory
-    arguments: ["@object_manager", "@csv_builder_row_factory", "@csv_builder_reader_factory", "@csv_filter_comment"]
+    arguments: ["@object_manager", "@csv_builder_reader_factory", "@csv_filter_comment"]
 
   # csv/filter
   csv_filter_comment:

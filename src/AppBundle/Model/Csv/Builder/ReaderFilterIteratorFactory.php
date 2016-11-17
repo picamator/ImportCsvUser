@@ -23,11 +23,6 @@ class ReaderFilterIteratorFactory implements ReaderFilterIteratorFactoryInterfac
     private $objectManager;
 
     /**
-     * @var RowFactoryInterface
-     */
-    private $rowFactory;
-
-    /**
      * @var ReaderFactoryInterface
      */
     private $readerFactory;
@@ -44,20 +39,17 @@ class ReaderFilterIteratorFactory implements ReaderFilterIteratorFactoryInterfac
 
     /**
      * @param ObjectManagerInterface    $objectManager
-     * @param RowFactoryInterface       $rowFactory
      * @param ReaderFactoryInterface    $readerFactory
      * @param RowFilterInterface        $rowFilter,
      * @param string                    $className
      */
     public function __construct(
         ObjectManagerInterface  $objectManager,
-        RowFactoryInterface     $rowFactory,
         ReaderFactoryInterface  $readerFactory,
         RowFilterInterface      $rowFilter,
         string                  $className = 'AppBundle\Model\Csv\ReaderFilterIterator'
     ) {
         $this->objectManager    = $objectManager;
-        $this->rowFactory       = $rowFactory;
         $this->readerFactory    = $readerFactory;
         $this->rowFilter        = $rowFilter;
         $this->className        = $className;
