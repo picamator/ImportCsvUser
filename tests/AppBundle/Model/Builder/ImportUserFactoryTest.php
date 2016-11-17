@@ -203,4 +203,91 @@ class ImportUserFactoryTest extends BaseTest
 
         $this->factory->create($this->rowMock);
     }
+
+    public function testRowWiderThenHeaderCreate()
+    {
+        $header = [
+            'firstname',
+        ];
+        $row = [
+            'Test name',
+            'test'
+        ];
+
+        // row mock
+        $this->rowMock->expects($this->atLeastOnce())
+            ->method('getHeader')
+            ->willReturn($header);
+
+        $this->rowMock->expects($this->once())
+            ->method('getRow')
+            ->willReturn($row);
+
+        // import user mock
+        $this->importUserMock->expects($this->once())
+            ->method('setFirstName')
+            ->with($this->equalTo($row[0]))
+            ->willReturnSelf();
+
+        // never
+        $this->importUserMock->expects($this->never())
+            ->method('setInfix');
+        $this->importUserMock->expects($this->never())
+            ->method('setLastName');
+        $this->importUserMock->expects($this->never())
+            ->method('setBirthDate');
+        $this->importUserMock->expects($this->never())
+            ->method('setGender');
+        $this->importUserMock->expects($this->never())
+            ->method('setZipCode');
+        $this->importUserMock->expects($this->never())
+            ->method('setHouseNumber');
+
+
+        $this->factory->create($this->rowMock);
+    }
+
+    public function testUnknownHeaderCreate()
+    {
+        $header = [
+            'firstname',
+            'New header'
+        ];
+        $row = [
+            'Test name',
+            'test'
+        ];
+
+        // row mock
+        $this->rowMock->expects($this->atLeastOnce())
+            ->method('getHeader')
+            ->willReturn($header);
+
+        $this->rowMock->expects($this->once())
+            ->method('getRow')
+            ->willReturn($row);
+
+        // import user mock
+        $this->importUserMock->expects($this->once())
+            ->method('setFirstName')
+            ->with($this->equalTo($row[0]))
+            ->willReturnSelf();
+
+        // never
+        $this->importUserMock->expects($this->never())
+            ->method('setInfix');
+        $this->importUserMock->expects($this->never())
+            ->method('setLastName');
+        $this->importUserMock->expects($this->never())
+            ->method('setBirthDate');
+        $this->importUserMock->expects($this->never())
+            ->method('setGender');
+        $this->importUserMock->expects($this->never())
+            ->method('setZipCode');
+        $this->importUserMock->expects($this->never())
+            ->method('setHouseNumber');
+
+
+        $this->factory->create($this->rowMock);
+    }
 }
