@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Model\Api\Builder;
+namespace AppBundle\Model\Api\Csv\Builder;
 
 use AppBundle\Model\Api\Csv\ReaderInterface;
 
@@ -12,10 +12,8 @@ interface ReaderFactoryInterface
      * Create
      *
      * @param string $path
-     * @param string $delimiter
-     * @param string $enclosure
      *
      * @return ReaderInterface
      */
-    public function create(string $path, string $delimiter = ',', string $enclosure = '"') : ReaderInterface;
+    public function create(string $path) : ReaderInterface;
 }

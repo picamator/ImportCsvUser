@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle\Model;
+namespace AppBundle\Model\Manager;
 
 use AppBundle\Model\Api\Entity\ImportUserInterface;
 use AppBundle\Model\Api\Manager\ImportUserManagerInterface;

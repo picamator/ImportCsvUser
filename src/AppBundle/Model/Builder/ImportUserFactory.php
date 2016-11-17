@@ -6,6 +6,7 @@ namespace AppBundle\Model\Builder;
 use AppBundle\Model\Api\Builder\ImportUserFactoryInterface;
 use AppBundle\Model\Api\Csv\Data\RowInterface;
 use AppBundle\Model\Api\Entity\ImportUserInterface;
+use AppBundle\Model\Api\ObjectManagerInterface;
 
 /**
  * Create ImportUser entity
@@ -26,16 +27,25 @@ class ImportUserFactory implements ImportUserFactoryInterface
     ];
 
     /**
-     * @var ImportUserInterface
+     * @var ObjectManagerInterface
      */
-    private $importUser;
+    private $objectManager;
 
     /**
-     * @param ImportUserInterface $importUser
+     * @var string
      */
-    public function __construct(ImportUserInterface $importUser)
-    {
-        $this->importUser = $importUser;
+    private $className;
+
+    /**
+     * @param ObjectManagerInterface    $objectManager
+     * @param string                    $className
+     */
+    public function __construct(
+        ObjectManagerInterface $objectManager,
+        string $className = 'AppBundle\Entity\ImportUser'
+    ) {
+        $this->objectManager = $objectManager;
+        $this->className = $className;
     }
 
     /**
@@ -54,16 +64,17 @@ class ImportUserFactory implements ImportUserFactoryInterface
             $schemaIndex[$indexItem] = $value;
         }
 
-        // sets
+        /** @var ImportUserInterface $importUser */
+        $importUser = $this->objectManager->create($this->className);
         foreach($row->getRow() as $key => $value) {
             if(!isset($schemaIndex[$key])) {
                 continue;
             }
 
             $methodName = 'set' . ucfirst($schemaIndex[$key]);
-            $this->importUser->$methodName($value);
+            $importUser->$methodName($value);
         }
 
-        return $this->importUser;
+        return $importUser;
     }
 }

@@ -5,7 +5,7 @@ services:
 
   import_csv_user:
     class: AppBundle\Model\ImportCsvUser
-    arguments: ["@=service('doctrine.orm.entity_manager')", "@service('validator')", "@builder_import_user_factory", "@manager_import_user", "@builder_import_result_factory"]
+    arguments: ["@=service('doctrine.orm.entity_manager')", "@=service('validator')", "@builder_import_user_factory", "@manager_import_user", "@builder_import_result_factory"]
 
   # entity
   entity_import_user:
@@ -14,7 +14,7 @@ services:
   # builder
   builder_import_user_factory:
     class: AppBundle\Model\Builder\ImportUserFactory
-    arguments: ["@entity_import_user"]
+    arguments: ["@object_manager"]
 
   builder_import_result_factory:
    class: AppBundle\Model\Builder\ImportResultFactory
@@ -22,7 +22,7 @@ services:
 
   # manager
   manager_import_user:
-    class: AppBundle\Model\ImportUserManager
+    class: AppBundle\Model\Manager\ImportUserManager
     arguments: ["@=service('doctrine.orm.entity_manager')"]
 
   # csv/builder
@@ -33,3 +33,12 @@ services:
   csv_builder_reader_factory:
     class: AppBundle\Model\Csv\Builder\ReaderFactory
     arguments: ["@object_manager", "@csv_builder_row_factory"]
+
+  csv_builder_reader_iteration_factory:
+    class: AppBundle\Model\Csv\Builder\ReaderFilterIteratorFactory
+    arguments: ["@object_manager", "@csv_builder_row_factory", "@csv_builder_reader_factory", "@csv_filter_comment"]
+
+  # csv/filter
+  csv_filter_comment:
+    class: AppBundle\Model\Csv\Filter\CommentFilter
+

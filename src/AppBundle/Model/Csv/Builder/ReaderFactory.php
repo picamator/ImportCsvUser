@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Model\Csv\Builder;
 
-use AppBundle\Model\Api\Builder\ReaderFactoryInterface;
+use AppBundle\Model\Api\Csv\Builder\ReaderFactoryInterface;
 use AppBundle\Model\Api\Csv\Builder\RowFactoryInterface;
 use AppBundle\Model\Api\Csv\ReaderInterface;
 use AppBundle\Model\Api\ObjectManagerInterface;
@@ -48,8 +48,8 @@ class ReaderFactory implements ReaderFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create(string $path, string $delimiter = ',', string $enclosure = '"') : ReaderInterface
+    public function create(string $path) : ReaderInterface
     {
-        return $this->objectManager->create($this->className, [$path, $this->rowFactory, $delimiter, $enclosure]);
+        return $this->objectManager->create($this->className, [$path, $this->rowFactory]);
     }
 }

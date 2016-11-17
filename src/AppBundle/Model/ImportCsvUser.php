@@ -6,7 +6,7 @@ namespace AppBundle\Model;
 use AppBundle\Model\Api\Builder\ImportResultFactoryInterface;
 use AppBundle\Model\Api\Builder\ImportUserFactoryInterface;
 use AppBundle\Model\Api\Csv\Data\RowInterface;
-use AppBundle\Model\Api\Csv\ReaderInterface;
+use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
 use AppBundle\Model\Api\Data\ImportResultInterface;
 use AppBundle\Model\Api\ImportInterface;
 use AppBundle\Model\Api\Manager\ImportUserManagerInterface;
@@ -93,8 +93,9 @@ class ImportCsvUser implements ImportInterface
     /**
      * {@inheritdoc}
      */
-    public function import(ReaderInterface $reader) : ImportResultInterface
+    public function import(ReaderFilterIteratorInterface $reader) : ImportResultInterface
     {
+        // save
         $this->entityManager->transactional(function() use ($reader) {
             /** @var RowInterface $item */
             foreach ($reader as $item) {
@@ -106,14 +107,12 @@ class ImportCsvUser implements ImportInterface
                     $this->addError($item->getLineNumber(), $errorList);
                     continue;
                 }
-
-                // save
                 $this->importUserManager->save($importUser);
                 $this->imported ++;
             }
         });
 
-        // result
+        // create result
         $importResult = $this->importResultFactory->create($this->imported, $this->skipped, $this->errorList);
         $this->postClean();
 

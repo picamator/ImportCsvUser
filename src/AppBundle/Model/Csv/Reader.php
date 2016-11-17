@@ -75,7 +75,9 @@ class Reader implements ReaderInterface
      */
     public function __destruct()
     {
-        fclose($this->file);
+        if (!is_null($this->file)) {
+            fclose($this->file);
+        }
     }
 
     /**
@@ -107,10 +109,14 @@ class Reader implements ReaderInterface
      */
     public function next()
     {
-        $this->position ++;
+        $row = $this->getRow();
+        if ($row === false) {
+            return false;
+        }
 
-        $row        = $this->getRow();
         $this->row  = $this->rowFactory->create($this->header, $row, $this->position);
+
+        return true;
     }
 
     /**
@@ -134,12 +140,10 @@ class Reader implements ReaderInterface
      */
     public function rewind()
     {
-        $this->position = 0;
         rewind($this->file);
+        $this->position = 0;
 
-        // skip header
-        $this->setHeader();
-        $this->next();
+        $this->getRow();
     }
 
     /**
@@ -160,6 +164,8 @@ class Reader implements ReaderInterface
      */
     private function getRow() : array
     {
+        $this->position ++;
+
         return fgetcsv($this->file, null, $this->delimiter, $this->enclosure) ? : [];
     }
 
@@ -168,14 +174,12 @@ class Reader implements ReaderInterface
      */
     private function setHeader()
     {
-        if (!empty($this->header)) {
-            return;
-        }
-
         $row = $this->getRow();
-        $this->header = array_map(function($item) {
-            return strtolower(trim(str_replace('#', '', $item)));
-        }, $row);
+        if (empty($this->header)) {
 
+            $this->header = array_map(function($item) {
+                return strtolower(trim(str_replace('#', '', $item)));
+            }, $row);
+        }
     }
 }

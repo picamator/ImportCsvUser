@@ -30,6 +30,25 @@ Requirements
 * [MySQL 5.7](https://www.mysql.com/)
 * [Symfony 3](http://symfony.com/)
 
+Install
+-------
+1. [Install and run Docker container](dev/docker/README.md)
+2. Run inside Docker container `composer install`
+3. Run inside Docker container to create database `php bin/console doctrine:database:create`
+
+Usage
+-----
+ImportCsvUser supports `user:import-csv` withe required option `--path`.
+For instance:
+
+```
+php bin/console user:import-csv --path ./tests/AppBundle/data/user.csv --verbose
+
+```
+
+_Note_: command SHOULD be run inside `import-web` container.
+
+
 File format
 -----------
 File SHOULD has delimiter `,` with enclosure `"`.
@@ -83,14 +102,6 @@ Documentation
 1. Database EER: (import_csv_user.png)[doc/db/import_csv_user.png]
 2. Uml class diagram: (class.diagram.png)[doc/uml/class.diagram.png] 
 3. Ideas: (FUTURE.CANDIDATE.md)[FUTURE.CANDIDATE.md]
-
-Developing
-----------
-To configure developing environment please:
-
-1. [Install and run Docker container](dev/docker/README.md)
-2. Run inside Docker container `composer install`
-3. Run inside Docker container to create database `php bin/console doctrine:database:create`
 
 Contribution
 ------------

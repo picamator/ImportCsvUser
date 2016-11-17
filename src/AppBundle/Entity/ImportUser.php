@@ -141,7 +141,7 @@ class ImportUser implements ImportUserInterface
      */
     public function setBirthDate($birthDate)
     {
-        $this->birthDate = $birthDate;
+        $this->birthDate = is_null($birthDate) ? : new \DateTime($birthDate);
 
         return $this;
     }

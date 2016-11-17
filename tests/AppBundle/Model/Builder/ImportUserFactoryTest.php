@@ -12,6 +12,11 @@ class ImportUserFactoryTest extends BaseTest
     private $factory;
 
     /**
+     * @var \AppBundle\Model\Api\ObjectManagerInterface | \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $objectManagerMock;
+
+    /**
      * @var \AppBundle\Model\Api\Entity\ImportUserInterface | \PHPUnit_Framework_MockObject_MockObject
      */
     private $importUserMock;
@@ -25,13 +30,16 @@ class ImportUserFactoryTest extends BaseTest
     {
         parent::setUp();
 
+        $this->objectManagerMock = $this->getMockBuilder('AppBundle\Model\Api\ObjectManagerInterface')
+            ->getMock();
+
         $this->importUserMock = $this->getMockBuilder('AppBundle\Model\Api\Entity\ImportUserInterface')
             ->getMock();
 
         $this->rowMock = $this->getMockBuilder('AppBundle\Model\Api\Csv\Data\RowInterface')
             ->getMock();
 
-        $this->factory = new ImportUserFactory($this->importUserMock);
+        $this->factory = new ImportUserFactory($this->objectManagerMock);
     }
 
     public function testFullCreate()
@@ -54,6 +62,12 @@ class ImportUserFactoryTest extends BaseTest
             '000001',
             '12b',
         ];
+
+        // object manager mock
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo('AppBundle\Entity\ImportUser'))
+            ->willReturn($this->importUserMock);
 
         // row mock
         $this->rowMock->expects($this->atLeastOnce())
@@ -121,6 +135,12 @@ class ImportUserFactoryTest extends BaseTest
             '1991-08-24',
         ];
 
+        // object manager mock
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo('AppBundle\Entity\ImportUser'))
+            ->willReturn($this->importUserMock);
+
         // row mock
         $this->rowMock->expects($this->atLeastOnce())
             ->method('getHeader')
@@ -176,6 +196,12 @@ class ImportUserFactoryTest extends BaseTest
         ];
         $row = [];
 
+        // object manager mock
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo('AppBundle\Entity\ImportUser'))
+            ->willReturn($this->importUserMock);
+
         // row mock
         $this->rowMock->expects($this->atLeastOnce())
             ->method('getHeader')
@@ -213,6 +239,12 @@ class ImportUserFactoryTest extends BaseTest
             'Test name',
             'test'
         ];
+
+        // object manager mock
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo('AppBundle\Entity\ImportUser'))
+            ->willReturn($this->importUserMock);
 
         // row mock
         $this->rowMock->expects($this->atLeastOnce())
@@ -257,6 +289,12 @@ class ImportUserFactoryTest extends BaseTest
             'Test name',
             'test'
         ];
+
+        // object manager mock
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo('AppBundle\Entity\ImportUser'))
+            ->willReturn($this->importUserMock);
 
         // row mock
         $this->rowMock->expects($this->atLeastOnce())

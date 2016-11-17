@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Model\Api;
 
-use AppBundle\Model\Api\Csv\ReaderInterface;
+use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
 use AppBundle\Model\Api\Data\ImportResultInterface;
 
 interface ImportInterface
@@ -9,9 +9,9 @@ interface ImportInterface
     /**
      * Import
      *
-     * @param ReaderInterface $reader
+     * @param ReaderFilterIteratorInterface $reader
      *
      * @return ImportResultInterface
      */
-    public function import(ReaderInterface $reader) : ImportResultInterface;
+    public function import(ReaderFilterIteratorInterface $reader) : ImportResultInterface;
 }
