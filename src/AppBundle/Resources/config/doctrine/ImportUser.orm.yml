@@ -1,0 +1,41 @@
+AppBundle\Entity\ImportUser:
+  type: entity
+  table: import_user
+  repositoryClass: AppBundle\Repository\ImportUserRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    firstName:
+      type: string
+      length: 255
+      column: firstname
+    infix:
+      type: string
+      length: 45
+      nullable: true
+    lastName:
+      type: string
+      length: 255
+      column: lastname
+      nullable: true
+    birthDate:
+      type: datetime
+      column: birthdate
+      nullable: true
+    gender:
+      type: string
+      length: 1
+      column: gender
+      nullable: true
+    zipCode:
+      type: string
+      length: 32
+      column: zipcode
+      nullable: true
+    houseNumber:
+      type: string
+      length: 255
+      column: housenumber
+      nullable: true

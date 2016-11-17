@@ -38,7 +38,7 @@ To make connection via console simple run `ssh root@0.0.0.0 -p 2229`.
 For configuration MySQL connection inside linked `import-web`` use:
 
 * host: import-mysql
-* port: 9306
+* port: 3306
 * username: 'root'
 * password: 'root'
 
