@@ -20,10 +20,6 @@ class CommentFilter implements RowFilterInterface
      */
     public function filter($row) : bool
     {
-        if (is_null($row)) {
-            return false;
-        }
-
         $firstRowItem = $row->getRow()[0] ?? self::$commentMark;
         $firstRowItem = trim($firstRowItem);
 

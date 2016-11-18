@@ -36,7 +36,7 @@ class ObjectManagerTest extends BaseTest
      */
     public function testFailCreate()
     {
-        $this->objectManager->create('ApiBundle\Model\ObjectManager', [1, 2]);
+        $this->objectManager->create('AppBundle\Model\ObjectManager', [1, 2]);
     }
 
     /**
