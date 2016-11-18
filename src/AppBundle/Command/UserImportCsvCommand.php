@@ -63,10 +63,14 @@ class UserImportCsvCommand extends ContainerAwareCommand
         $importResult   = $importCsvUser->import($readerFilterIteration);
 
         // display results
-        $output->writeln('Imported: ' . $importResult->getImported());
-        $output->writeln('Skipped: ' . $importResult->getSkipped());
+        $outputMsg = [
+            sprintf('<info>Imported: %s</info>', $importResult->getImported()),
+            sprintf('<comment>Skipped: %s</comment>', $importResult->getSkipped())
+        ];
         foreach($importResult->getErrorList() as $item) {
-            $output->writeln($item);
+            $outputMsg[] = sprintf('<error>%s</error>', $item);
         }
+
+        $output->writeln($outputMsg);
     }
 }

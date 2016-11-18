@@ -20,9 +20,9 @@ class ImportUserRepository extends EntityRepository  implements ImportUserReposi
     public function getAverageAge(string $gender) : float
     {
         $query = $this->createQueryBuilder('iu')
-            ->select('AVG(TIMESTAMPDIFF(YEAR, iu.birthdate, CURDATE())) AS average')
+            ->select('AVG(TIMESTAMPDIFF(YEAR, iu.birthDate, NOW())) AS average')
             ->where('iu.gender = ?1')
-            ->andWhere('iu.birthdate IS NOT NUL')
+            ->andWhere('iu.birthDate IS NOT NULL')
             ->setParameter(1, $gender)
             ->getQuery();
 

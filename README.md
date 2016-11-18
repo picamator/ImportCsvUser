@@ -40,11 +40,16 @@ Usage
 -----
 ImportCsvUser supports commands:
 
- * `user:import-csv` with required option `--path`
+ * `user:import-csv`: import csv file to database
+ * `user:age-average`: get age average
 
 _Note_: all example command SHOULD be run inside `import-web` container.
 
-### Example 1
+### user:import-csv
+
+Please run `php bin/console user:import-csv -h` to see how to use command.
+
+#### Example 1
 
 In that example valid user file is importing.
 
@@ -63,7 +68,7 @@ Skipped: 0
 
 ```
 
-### Example 2
+#### Example 2
 
 In that example some file contains some invalid rows.
 
@@ -83,6 +88,27 @@ Line #1: Invalid parameter 'firstName'. This value should not be blank.
 Line #1: Invalid parameter 'gender'. Choose a valid gender.
 Line #5: Invalid parameter 'zipCode'. This value is too long. It should have 32 character or less.
 Line #7: Invalid parameter 'birthDate'. This value is not a valid date.
+
+```
+
+### user:age-average
+
+Please run `php bin/console user:age-average -h` to see how to use command.
+
+#### Example 1
+
+Please execute command:
+
+```bash
+php bin/console user:age-average
+
+```
+
+As execution result:
+
+```bash
+Average male age: 32.12
+Average female age: 30.26
 
 ```
 

@@ -8,7 +8,6 @@ use AppBundle\Model\Api\Builder\ImportUserFactoryInterface;
 use AppBundle\Model\Api\Csv\Data\RowInterface;
 use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
 use AppBundle\Model\Api\Data\ImportResultInterface;
-use AppBundle\Model\Api\ImportInterface;
 use AppBundle\Model\Api\Manager\ImportUserManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -20,7 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  *
  * @todo move error rendering to different class
  */
-class ImportCsvUser implements ImportInterface
+class ImportCsvUser
 {
     /**
      * @var string
