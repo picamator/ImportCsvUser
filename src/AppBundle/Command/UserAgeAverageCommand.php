@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace AppBundle\Command;
 
@@ -30,9 +31,8 @@ class UserAgeAverageCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getContainer();
         /** @var AgeStatistics $service */
-        $service = $container->get('service_age_average');
+        $service = $this->getContainer()->get('service_age_average');
 
         // display results
         $outputMsg = [

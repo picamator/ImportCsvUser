@@ -23,3 +23,10 @@ AppBundle\Entity\ImportUser:
     houseNumber:
       - Length:
           max: 255
+
+AppBundle\Model\Csv\Data\Path:
+  properties:
+    path:
+      - NotBlank: ~
+      - File:
+          mimeTypes: [text/csv, text/plain, application/vnd.ms-excel, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.spreadsheet]

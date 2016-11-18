@@ -15,6 +15,11 @@ use AppBundle\Model\Api\Csv\RowFilterInterface;
 class ReaderFilterIterator extends \FilterIterator implements ReaderFilterIteratorInterface
 {
     /**
+     * @var ReaderInterface
+     */
+    private $iterator;
+
+    /**
      * @var RowFilterInterface
      */
     private $rowFilter;
@@ -27,6 +32,7 @@ class ReaderFilterIterator extends \FilterIterator implements ReaderFilterIterat
     {
         parent::__construct($iterator);
 
+        $this->iterator = $iterator;
         $this->rowFilter = $rowFilter;
     }
 
@@ -38,5 +44,13 @@ class ReaderFilterIterator extends \FilterIterator implements ReaderFilterIterat
         $row = $this->getInnerIterator()->current();
 
         return $this->rowFilter->filter($row);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInnerIterator()
+    {
+        return $this->iterator;
     }
 }

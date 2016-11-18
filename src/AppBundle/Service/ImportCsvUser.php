@@ -5,9 +5,10 @@ namespace AppBundle\Service;
 
 use AppBundle\Model\Api\Builder\ImportResultFactoryInterface;
 use AppBundle\Model\Api\Builder\ImportUserFactoryInterface;
+use AppBundle\Model\Api\Csv\Builder\ReaderFilterIteratorFactoryInterface;
 use AppBundle\Model\Api\Csv\Data\RowInterface;
-use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
 use AppBundle\Model\Api\Data\ImportResultInterface;
+use AppBundle\Model\Api\Data\PathInterface;
 use AppBundle\Model\Api\Manager\ImportUserManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -35,6 +36,11 @@ class ImportCsvUser
      * @var ValidatorInterface
      */
     private $validator;
+
+    /**
+     * @var ReaderFilterIteratorFactoryInterface
+     */
+    private $readerFactory;
 
     /**
      * @var ImportUserFactoryInterface
@@ -69,21 +75,24 @@ class ImportCsvUser
     private $imported = 0;
 
     /**
-     * @param EntityManagerInterface        $entityManager
-     * @param ValidatorInterface            $validator
-     * @param ImportUserFactoryInterface    $importUserFactory
-     * @param ImportUserManagerInterface    $importUserManager
-     * @param ImportResultFactoryInterface  $importResultFactory
+     * @param EntityManagerInterface                $entityManager
+     * @param ValidatorInterface                    $validator
+     * @param ReaderFilterIteratorFactoryInterface  $readerFactory
+     * @param ImportUserFactoryInterface            $importUserFactory
+     * @param ImportUserManagerInterface            $importUserManager
+     * @param ImportResultFactoryInterface          $importResultFactory
      */
     public function __construct(
-        EntityManagerInterface       $entityManager,
-        ValidatorInterface           $validator,
-        ImportUserFactoryInterface   $importUserFactory,
-        ImportUserManagerInterface   $importUserManager,
-        ImportResultFactoryInterface $importResultFactory
+        EntityManagerInterface                  $entityManager,
+        ValidatorInterface                      $validator,
+        ReaderFilterIteratorFactoryInterface    $readerFactory,
+        ImportUserFactoryInterface              $importUserFactory,
+        ImportUserManagerInterface              $importUserManager,
+        ImportResultFactoryInterface            $importResultFactory
     ) {
         $this->entityManager        = $entityManager;
         $this->validator            = $validator;
+        $this->readerFactory        = $readerFactory;
         $this->importUserFactory    = $importUserFactory;
         $this->importUserManager    = $importUserManager;
         $this->importResultFactory  = $importResultFactory;
@@ -92,9 +101,22 @@ class ImportCsvUser
     /**
      * {@inheritdoc}
      */
-    public function import(ReaderFilterIteratorInterface $reader) : ImportResultInterface
+    public function import(PathInterface $path) : ImportResultInterface
     {
+        // validate path
+        $errorList = $this->validator->validate($path);
+        if ($errorList->count() > 0) {
+            $this->addError(0, $errorList);
+
+            $importResult =  $this->importResultFactory->create($this->imported, $this->skipped, $this->errorList);
+            $this->postClean();
+
+            return $importResult;
+        }
+
         // save
+        $reader = $this->readerFactory->create($path->getPath());
+
         $this->entityManager->transactional(function() use ($reader) {
             /** @var RowInterface $item */
             foreach ($reader as $item) {
@@ -102,7 +124,7 @@ class ImportCsvUser
 
                 // validate
                 $errorList = $this->validator->validate($importUser);
-                if (count($errorList) > 0) {
+                if ($errorList->count() > 0) {
                     $this->addError($item->getLineNumber(), $errorList);
                     continue;
                 }

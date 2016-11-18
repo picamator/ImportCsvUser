@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace AppBundle\Command;
 
-use AppBundle\Model\Api\Csv\ReaderFilterIteratorInterface;
+use AppBundle\Model\Api\Data\PathInterface;
 use AppBundle\Model\ImportCsvUser;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,34 +34,16 @@ class UserImportCsvCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // validate file
         $path = $input->getOption('path');
-        if (!file_exists($path) || !is_readable($path)) {
-            $output->writeln(
-                sprintf('Can not make import. Invalid path "%s". Failed does not exist or does not have readable permission. Please check your file and try again.', $path)
-            );
-            return;
-        }
 
-        // validate extension
-        $info = new \SplFileInfo($path);
-        if($info->getExtension() !== 'csv') {
-            $output->writeln(
-                sprintf('Can not make import. Invalid file extension "%s". Please use .csv files for import.', $info->getExtension())
-            );
-            return;
-        }
-
-        // import
-        $container = $this->getContainer();
-
-        /** @var ReaderFilterIteratorInterface $readerFilterIteration */
-        $readerFilterIteration = $container->get('csv_builder_reader_iteration_factory')
+        /** @var PathInterface $path */
+        $path = $this->getContainer()
+            ->get('csv_builder_path_factory')
             ->create($path);
 
         /** @var ImportCsvUser $importCsvUser */
-        $importCsvUser  = $container->get('service_import_csv_user');
-        $importResult   = $importCsvUser->import($readerFilterIteration);
+        $importCsvUser  = $this->getContainer()->get('service_import_csv_user');
+        $importResult   = $importCsvUser->import($path);
 
         // display results
         $outputMsg = [
