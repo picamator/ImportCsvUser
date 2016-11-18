@@ -38,24 +38,53 @@ Install
 
 Usage
 -----
-ImportCsvUser supports `user:import-csv` withe required option `--path`.
+ImportCsvUser supports commands:
 
-Example importing valid file:
+ * `user:import-csv` with required option `--path`
+
+_Note_: all example command SHOULD be run inside `import-web` container.
+
+### Example 1
+
+In that example valid user file is importing.
+
+Please execute:
+
+```bash
+php bin/console user:import-csv --path ./doc/csv/user.valid.csv
 
 ```
-php bin/console user:import-csv --path ./tests/AppBundle/data/user.csv
+
+As execution result:
+
+```bash
+Imported: 5
+Skipped: 0
 
 ```
 
-Example importing invalid file:
+### Example 2
+
+In that example some file contains some invalid rows.
+
+Please execute command:
+
+```bash
+php bin/console user:import-csv --path ./doc/csv/user.valid.csv
 
 ```
-php bin/console user:import-csv --path ./tests/AppBundle/data/invalid.user.csv
+
+As execution result:
+
+```bash
+Imported: 2
+Skipped: 3
+Line #1: Invalid parameter 'firstName'. This value should not be blank.
+Line #1: Invalid parameter 'gender'. Choose a valid gender.
+Line #5: Invalid parameter 'zipCode'. This value is too long. It should have 32 character or less.
+Line #7: Invalid parameter 'birthDate'. This value is not a valid date.
 
 ```
-
-_Note_: command SHOULD be run inside `import-web` container.
-
 
 File format
 -----------
@@ -64,11 +93,12 @@ First row in csv file is a schema. It is important the column name not an order.
 
 Table bellow describes column name.
 
-name/characteristics    | firstname | infix | lastname  | date of birth | gender            | zipcode           | housenumber
----                     | ---       | ---   | ---       | ---           | ---               | ---               | ---
-required                | yes       | no    | no        | no            | no                | no                | no
-has normalizers         | no        | no    | no        | no            | tim, lowercase    | trim, uppercase   | no
-example                 | Nick      | ter   | Tester    | 1991-08-24    | m                 | 12010             | 9b 
+name/characteristics    | firstname     | infix         | lastname      | date of birth | gender            | zipcode           | housenumber
+---                     | ---           | ---           | ---           | ---           | ---               | ---               | ---
+required                | yes           | no            | no            | no            | no                | no                | no
+has normalizers         | no            | no            | no            | no            | tim, lowercase    | trim, uppercase   | no
+data type               | String[2-255] | String[0-45]  | String[0-255] | Date[Y-m-d]   | String['m', 'f']  | String[0-32]      | String[0-255]
+example                 | Nick          | ter           | Tester        | 1991-08-24    | m                 | 12010             | 9b 
 
 _Note_: column name SHOULD start form alphabetic character. It case if it's present some non alphabetic character it will be
 remove and application try to map columns with sanitized column name. For instance if the original column name `# firstname` 
@@ -84,7 +114,7 @@ Normalizers helps to clean users data of get the right format.
 
 Here is a normalizer list:
 
-* zipcode: trim spaces and make uppercase
+* zipcode: trim spaces, make uppercase
 
 Validators
 ----------
@@ -114,6 +144,7 @@ Documentation
 1. Database EER: (import_csv_user.png)[doc/db/import_csv_user.png]
 2. Uml class diagram: (class.diagram.png)[doc/uml/class.diagram.png] 
 3. Ideas: (FUTURE.CANDIDATE.md)[FUTURE.CANDIDATE.md]
+4. CSV samples: (csv)[doc/csv]
 
 Contribution
 ------------

@@ -3,9 +3,23 @@ AppBundle\Entity\ImportUser:
     firstName:
       - NotBlank: ~
       - Length:
-          min: 1
+          min: 2
+          max: 255
+    infix:
+      - Length:
+          max: 45
+    lastName:
+      - Length:
           max: 255
     birthDate:
       - Date: ~
     gender:
-      - AppBundle\Validator\Constraints\Gender: ~
+      - Choice:
+          choices:  [m, f]
+          message:  Choose a valid gender.
+    zipCode:
+      - Length:
+          max: 32
+    houseNumber:
+      - Length:
+          max: 255

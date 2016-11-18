@@ -29,7 +29,7 @@ class ImportCsvUserTest extends BaseTest
 
     public function testGetDelimiter()
     {
-        $path   = $this->getDataPath('full.fields.user.csv');
+        $path   = $this->getDataPath('user.full.fields.csv');
         $reader = new Reader($path, $this->rowFactoryMock);
 
         $this->assertEquals(',', $reader->getDelimiter());
@@ -37,7 +37,7 @@ class ImportCsvUserTest extends BaseTest
 
     public function testGetEnclosure()
     {
-        $path   = $this->getDataPath('full.fields.user.csv');
+        $path   = $this->getDataPath('user.full.fields.csv');
         $reader = new Reader($path, $this->rowFactoryMock);
 
         $this->assertEquals('"', $reader->getEnclosure());
@@ -50,7 +50,7 @@ class ImportCsvUserTest extends BaseTest
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('full.fields.user.csv');
+        $path   = $this->getDataPath('user.full.fields.csv');
         $reader = new Reader($path, $this->rowFactoryMock);
 
         $this->assertSame($reader->current(), $reader->current());
@@ -63,7 +63,7 @@ class ImportCsvUserTest extends BaseTest
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('full.fields.user.csv');
+        $path   = $this->getDataPath('user.full.fields.csv');
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
@@ -78,7 +78,7 @@ class ImportCsvUserTest extends BaseTest
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('headers.only.user.csv', $this->rowFactoryMock);
+        $path   = $this->getDataPath('user.headers.only.csv', $this->rowFactoryMock);
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
@@ -93,7 +93,7 @@ class ImportCsvUserTest extends BaseTest
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('empty.user.csv', $this->rowFactoryMock);
+        $path   = $this->getDataPath('user.empty.csv', $this->rowFactoryMock);
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
@@ -108,7 +108,7 @@ class ImportCsvUserTest extends BaseTest
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('full.with.comments.user.csv', $this->rowFactoryMock);
+        $path   = $this->getDataPath('user.full.with.comments.csv', $this->rowFactoryMock);
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
