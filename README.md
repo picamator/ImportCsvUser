@@ -47,11 +47,11 @@ _Note_: all example command SHOULD be run inside `import-web` container.
 
 ### user:import-csv
 
-Please run `php bin/console user:import-csv -h` to see how to use command.
+Please execute `php bin/console user:import-csv -h` to see how to use command.
 
 #### Example 1
 
-In that example valid user file is importing.
+In that example is importing valid user file.
 
 Please execute:
 
@@ -70,7 +70,7 @@ Skipped: 0
 
 #### Example 2
 
-In that example some file contains some invalid rows.
+In that example file contains some invalid rows.
 
 Please execute command:
 

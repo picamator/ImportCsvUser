@@ -111,11 +111,11 @@ class UserImportCsvCommandTest extends BaseTest
 
         $this->importResultMock->expects($this->once())
             ->method('getSkipped')
-            ->willReturn(0);
+            ->willReturn(1);
 
         $this->importResultMock->expects($this->once())
             ->method('getErrorList')
-            ->willReturn([]);
+            ->willReturn(['message']);
 
         // output mock
         $this->outputMock->expects($this->once())
