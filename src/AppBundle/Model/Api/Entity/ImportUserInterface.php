@@ -124,4 +124,18 @@ interface ImportUserInterface
      * @return string
      */
     public function getHouseNumber();
+
+    /**
+     * Do birthDate pre persist
+     *
+     * @return void
+     */
+    public function doBirthDatePrePersist();
+
+    /**
+     * Do zipCode pre persist
+     *
+     * @return void
+     */
+    public function doZipCodePrePersist();
 }

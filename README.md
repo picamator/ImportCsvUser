@@ -39,10 +39,18 @@ Install
 Usage
 -----
 ImportCsvUser supports `user:import-csv` withe required option `--path`.
-For instance:
+
+Example importing valid file:
 
 ```
-php bin/console user:import-csv --path ./tests/AppBundle/data/user.csv --verbose
+php bin/console user:import-csv --path ./tests/AppBundle/data/user.csv
+
+```
+
+Example importing invalid file:
+
+```
+php bin/console user:import-csv --path ./tests/AppBundle/data/invalid.user.csv
 
 ```
 

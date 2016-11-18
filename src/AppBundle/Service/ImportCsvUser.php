@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle\Model;
+namespace AppBundle\Service;
 
 use AppBundle\Model\Api\Builder\ImportResultFactoryInterface;
 use AppBundle\Model\Api\Builder\ImportUserFactoryInterface;
@@ -25,7 +25,7 @@ class ImportCsvUser implements ImportInterface
     /**
      * @var string
      */
-    private static $errorTemplate = 'Line # \'%s\'. Invalid parameter \'%s\'. %s';
+    private static $errorTemplate = 'Line #%s: Invalid parameter \'%s\'. %s';
 
     /**
      * @var EntityManagerInterface

@@ -141,7 +141,7 @@ class ImportUser implements ImportUserInterface
      */
     public function setBirthDate($birthDate)
     {
-        $this->birthDate = is_null($birthDate) ? : new \DateTime($birthDate);
+        $this->birthDate = $birthDate;
 
         return $this;
     }
@@ -189,7 +189,7 @@ class ImportUser implements ImportUserInterface
      */
     public function setZipCode($zipCode)
     {
-        $this->zipCode = !$zipCode ? : strtoupper(trim($zipCode));
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -226,5 +226,29 @@ class ImportUser implements ImportUserInterface
     public function getHouseNumber()
     {
         return $this->houseNumber;
+    }
+
+    /**
+     * Do birthDate pre persist
+     *
+     * @return void
+     */
+    public function doBirthDatePrePersist()
+    {
+       if (!empty($this->birthDate) && is_string($this->birthDate)) {
+           $this->birthDate = new \DateTime($this->birthDate);
+       }
+    }
+
+    /**
+     * Do zipCode pre persist
+     *
+     * @return void
+     */
+    public function doZipCodePrePersist()
+    {
+        if (!empty($this->zipCode)) {
+            $this->zipCode = strtoupper(trim($this->zipCode));
+        }
     }
 }

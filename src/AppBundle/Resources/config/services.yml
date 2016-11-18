@@ -3,10 +3,6 @@ services:
   object_manager:
     class: AppBundle\Model\ObjectManager
 
-  import_csv_user:
-    class: AppBundle\Model\ImportCsvUser
-    arguments: ["@=service('doctrine.orm.entity_manager')", "@=service('validator')", "@builder_import_user_factory", "@manager_import_user", "@builder_import_result_factory"]
-
   # entity
   entity_import_user:
     class: AppBundle\Entity\ImportUser
@@ -42,3 +38,7 @@ services:
   csv_filter_comment:
     class: AppBundle\Model\Csv\Filter\CommentFilter
 
+  # service
+  service_import_csv_user:
+    class: AppBundle\Service\ImportCsvUser
+    arguments: ["@=service('doctrine.orm.entity_manager')", "@=service('validator')", "@builder_import_user_factory", "@manager_import_user", "@builder_import_result_factory"]

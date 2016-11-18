@@ -2,6 +2,8 @@ AppBundle\Entity\ImportUser:
   type: entity
   table: import_user
   repositoryClass: AppBundle\Repository\ImportUserRepository
+  lifecycleCallbacks:
+    prePersist: [ doBirthDatePrePersist, doZipCodePrePersist]
   id:
     id:
       type: integer

@@ -59,7 +59,7 @@ class UserImportCsvCommand extends ContainerAwareCommand
             ->create($path);
 
         /** @var ImportCsvUser $importCsvUser */
-        $importCsvUser  = $container->get('import_csv_user');
+        $importCsvUser  = $container->get('service_import_csv_user');
         $importResult   = $importCsvUser->import($readerFilterIteration);
 
         // display results

@@ -1,7 +1,8 @@
 <?php
-namespace AppBundle\Tests\Model;
+namespace AppBundle\Tests\Service;
 
-use AppBundle\Model\ImportCsvUser;
+use AppBundle\Service\ImportCsvUser;
+use AppBundle\Tests\Model\BaseTest;
 
 class ImportCsvUserTest extends BaseTest
 {
