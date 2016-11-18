@@ -96,6 +96,8 @@ class ImportCsvUserTest extends BaseTest
 
     public function testValidImport()
     {
+        $this->markTestIncomplete();
+
         // row mock
         $rowMock = $this->getMockBuilder('AppBundle\Model\Api\Csv\Data\RowInterface')
             ->getMock();
