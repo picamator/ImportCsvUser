@@ -1,0 +1,52 @@
+services:
+  # model
+  object_manager:
+    class: AppBundle\Model\ObjectManager
+
+  # entity
+  entity_import_user:
+    class: AppBundle\Entity\ImportUser
+
+  # builder
+  builder_import_user_factory:
+    class: AppBundle\Model\Builder\ImportUserFactory
+    arguments: ["@object_manager"]
+
+  builder_import_result_factory:
+   class: AppBundle\Model\Builder\ImportResultFactory
+   arguments: ["@object_manager"]
+
+  # manager
+  manager_import_user:
+    class: AppBundle\Model\Manager\ImportUserManager
+    arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+  # csv/builder
+  csv_builder_row_factory:
+    class: AppBundle\Model\Csv\Builder\RowFactory
+    arguments: ["@object_manager"]
+
+  csv_builder_path_factory:
+    class: AppBundle\Model\Csv\Builder\PathFactory
+    arguments: ["@object_manager"]
+
+  csv_builder_reader_factory:
+    class: AppBundle\Model\Csv\Builder\ReaderFactory
+    arguments: ["@object_manager", "@csv_builder_row_factory"]
+
+  csv_builder_reader_iteration_factory:
+    class: AppBundle\Model\Csv\Builder\ReaderFilterIteratorFactory
+    arguments: ["@object_manager", "@csv_builder_reader_factory", "@csv_filter_comment"]
+
+  # csv/filter
+  csv_filter_comment:
+    class: AppBundle\Model\Csv\Filter\CommentFilter
+
+  # service
+  service_import_csv_user:
+    class: AppBundle\Service\ImportCsvUser
+    arguments: ["@=service('doctrine.orm.entity_manager')", "@=service('validator')", "@csv_builder_reader_iteration_factory", "@builder_import_user_factory", "@manager_import_user", "@builder_import_result_factory"]
+
+  service_age_average:
+    class: AppBundle\Service\AgeStatistics
+    arguments: ["@=service('doctrine.orm.entity_manager')"]

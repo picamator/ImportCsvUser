@@ -1,0 +1,32 @@
+AppBundle\Entity\ImportUser:
+  properties:
+    firstName:
+      - NotBlank: ~
+      - Length:
+          min: 2
+          max: 255
+    infix:
+      - Length:
+          max: 45
+    lastName:
+      - Length:
+          max: 255
+    birthDate:
+      - Date: ~
+    gender:
+      - Choice:
+          choices:  [m, f]
+          message:  Choose a valid gender.
+    zipCode:
+      - Length:
+          max: 32
+    houseNumber:
+      - Length:
+          max: 255
+
+AppBundle\Model\Csv\Data\Path:
+  properties:
+    path:
+      - NotBlank: ~
+      - File:
+          mimeTypes: [text/csv, text/plain, application/vnd.ms-excel, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.spreadsheet]
