@@ -2,6 +2,7 @@
 namespace AppBundle\Tests\Model;
 
 use AppBundle\Model\ObjectManager;
+use AppBundle\Tests\BaseTest;
 
 class ObjectManagerTest extends BaseTest
 {

@@ -2,7 +2,7 @@
 namespace AppBundle\Tests\Model\Csv;
 
 use AppBundle\Model\Csv\Reader;
-use AppBundle\Tests\Model\BaseTest;
+use AppBundle\Tests\BaseTest;
 
 class ImportCsvUserTest extends BaseTest
 {

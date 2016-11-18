@@ -2,7 +2,7 @@
 namespace AppBundle\Tests\Service;
 
 use AppBundle\Service\ImportCsvUser;
-use AppBundle\Tests\Model\BaseTest;
+use AppBundle\Tests\BaseTest;
 
 class ImportCsvUserTest extends BaseTest
 {
@@ -25,6 +25,11 @@ class ImportCsvUserTest extends BaseTest
      * @var \Symfony\Component\Validator\ConstraintViolationList | \PHPUnit_Framework_MockObject_MockObject
      */
     private $constraintViolationListMock;
+
+    /**
+     * @var \Symfony\Component\Validator\ConstraintViolationInterface | \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $constraintViolation;
 
     /**
      * @var \AppBundle\Model\Api\Csv\Builder\ReaderFilterIteratorFactoryInterface | \PHPUnit_Framework_MockObject_MockObject
@@ -82,6 +87,8 @@ class ImportCsvUserTest extends BaseTest
             ->getMock();
         $this->constraintViolationListMock = $this->getMockBuilder('Symfony\Component\Validator\ConstraintViolationList')
             ->getMock();
+        $this->constraintViolation = $this->getMockBuilder('Symfony\Component\Validator\ConstraintViolationInterface')
+            ->getMock();
 
         $this->readerFactoryMock = $this->getMockBuilder('AppBundle\Model\Api\Csv\Builder\ReaderFilterIteratorFactoryInterface')
             ->getMock();
@@ -130,7 +137,16 @@ class ImportCsvUserTest extends BaseTest
 
         $this->constraintViolationListMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator([]));
+            ->willReturn(new \ArrayIterator([$this->constraintViolation]));
+
+        // constraint violation mock
+        $this->constraintViolation->expects($this->once())
+            ->method('getPropertyPath')
+            ->willReturn('');
+
+        $this->constraintViolation->expects($this->once())
+            ->method('getMessage')
+            ->willReturn('');
 
         // validator mock
         $this->validatorMock->expects($this->once())
@@ -141,7 +157,7 @@ class ImportCsvUserTest extends BaseTest
         // import result factory mock
         $this->importResultFactoryMock->expects($this->once())
             ->method('create')
-            ->with($this->equalTo(0), $this->equalTo(1), $this->equalTo(['']))
+            ->with($this->equalTo(0), $this->equalTo(1), $this->anything())
             ->willReturn($this->importResultMock);
 
         // never
@@ -164,7 +180,16 @@ class ImportCsvUserTest extends BaseTest
 
         $this->constraintViolationListMock->expects($this->once())
             ->method('getIterator')
-            ->willReturn(new \ArrayIterator([]));
+            ->willReturn(new \ArrayIterator([$this->constraintViolation]));
+
+        // constraint violation mock
+        $this->constraintViolation->expects($this->once())
+            ->method('getPropertyPath')
+            ->willReturn('');
+
+        $this->constraintViolation->expects($this->once())
+            ->method('getMessage')
+            ->willReturn('');
 
         // validator mock
         $this->validatorMock->expects($this->exactly(2))
@@ -209,7 +234,7 @@ class ImportCsvUserTest extends BaseTest
         // import result factory mock
         $this->importResultFactoryMock->expects($this->once())
             ->method('create')
-            ->with($this->equalTo(0), $this->equalTo(1), $this->equalTo(['']))
+            ->with($this->equalTo(0), $this->equalTo(1), $this->anything())
             ->willReturn($this->importResultMock);
 
         // never

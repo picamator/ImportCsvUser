@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace AppBundle\Command;
 
-use AppBundle\Service\AgeStatistics;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,6 +11,8 @@ class UserAgeAverageCommand extends ContainerAwareCommand
 {
     /**
      * Configure
+     *
+     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -31,7 +32,7 @@ class UserAgeAverageCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var AgeStatistics $service */
+        /** @var \AppBundle\Service\AgeStatistics $service */
         $service = $this->getContainer()->get('service_age_average');
 
         // display results

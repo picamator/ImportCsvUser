@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace AppBundle\Command;
 
-use AppBundle\Model\Api\Data\PathInterface;
-use AppBundle\Model\ImportCsvUser;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,6 +12,8 @@ class UserImportCsvCommand extends ContainerAwareCommand
 {
     /**
      * Configure
+     *
+     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -36,12 +36,10 @@ class UserImportCsvCommand extends ContainerAwareCommand
     {
         $path = $input->getOption('path');
 
-        /** @var PathInterface $path */
-        $path = $this->getContainer()
-            ->get('csv_builder_path_factory')
-            ->create($path);
+        /** @var \AppBundle\Model\Api\Data\PathInterface $path */
+        $path = $this->getContainer()->get('csv_builder_path_factory')->create($path);
 
-        /** @var ImportCsvUser $importCsvUser */
+        /** @var \AppBundle\Service\ImportCsvUser $importCsvUser */
         $importCsvUser  = $this->getContainer()->get('service_import_csv_user');
         $importResult   = $importCsvUser->import($path);
 

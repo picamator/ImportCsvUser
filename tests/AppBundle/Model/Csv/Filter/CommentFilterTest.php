@@ -2,7 +2,7 @@
 namespace AppBundle\Tests\Model\Csv\Filter;
 
 use AppBundle\Model\Csv\Filter\CommentFilter;
-use AppBundle\Tests\Model\BaseTest;
+use AppBundle\Tests\BaseTest;
 
 class CommentFilterTest extends BaseTest
 {

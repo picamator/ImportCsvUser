@@ -2,7 +2,7 @@
 namespace AppBundle\Tests\Builder;
 
 use AppBundle\Model\Builder\ImportUserFactory;
-use AppBundle\Tests\Model\BaseTest;
+use AppBundle\Tests\BaseTest;
 
 class ImportUserFactoryTest extends BaseTest
 {

@@ -2,7 +2,7 @@
 namespace AppBundle\Tests\Service;
 
 use AppBundle\Service\AgeStatistics;
-use AppBundle\Tests\Model\BaseTest;
+use AppBundle\Tests\BaseTest;
 
 class AgeStatisticsTest extends BaseTest
 {

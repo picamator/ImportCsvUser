@@ -156,19 +156,6 @@ There is a list of validators:
 * `zipcode`: max length 32
 * `housenumber`: max length 255
 
-Import result
--------------
-Import result contains:
-
-* Number of imported rows
-* Number of skipped rows
-
-Statistics
-----------
-Here is a list of supported statistics:
-
-* Average age for women and men
-
 Documentation
 -------------
 1. Database EER: [import_csv_user.png](doc/db/import_csv_user.png)
