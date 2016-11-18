@@ -27,16 +27,43 @@ class ImportCsvUserTest extends BaseTest
         parent::setUp();
     }
 
+    public function testGetDelimiter()
+    {
+        $path   = $this->getDataPath('full.fields.user.csv');
+        $reader = new Reader($path, $this->rowFactoryMock);
+
+        $this->assertEquals(',', $reader->getDelimiter());
+    }
+
+    public function testGetEnclosure()
+    {
+        $path   = $this->getDataPath('full.fields.user.csv');
+        $reader = new Reader($path, $this->rowFactoryMock);
+
+        $this->assertEquals('"', $reader->getEnclosure());
+    }
+
+    public function testCurrent()
+    {
+        // row factory mock
+        $this->rowFactoryMock->expects($this->once())
+            ->method('create')
+            ->willReturn($this->rowMock);
+
+        $path   = $this->getDataPath('full.fields.user.csv');
+        $reader = new Reader($path, $this->rowFactoryMock);
+
+        $this->assertSame($reader->current(), $reader->current());
+    }
+
     public function testFullFields()
     {
-        $this->markTestIncomplete();
-
         // row factory mock
         $this->rowFactoryMock->expects($this->atLeastOnce())
             ->method('create')
             ->willReturn($this->rowMock);
 
-        $path   = $this->getDataPath('full.fields.user.csv', $this->rowFactoryMock);
+        $path   = $this->getDataPath('full.fields.user.csv');
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
@@ -44,10 +71,8 @@ class ImportCsvUserTest extends BaseTest
         }
     }
 
-    public function testNoData()
+    public function testHeadersOnly()
     {
-        $this->markTestIncomplete();
-
         // row factory mock
         $this->rowFactoryMock->expects($this->atLeastOnce())
             ->method('create')
@@ -57,17 +82,12 @@ class ImportCsvUserTest extends BaseTest
         $reader = new Reader($path, $this->rowFactoryMock);
 
         foreach($reader as $item) {
-
-            var_dump($item);
-
             $this->assertEquals($this->rowMock, $item);
         }
     }
 
-    public function testEmptyFile()
+    public function testEmpty()
     {
-        $this->markTestIncomplete();
-
         // row factory mock
         $this->rowFactoryMock->expects($this->atLeastOnce())
             ->method('create')
@@ -83,8 +103,6 @@ class ImportCsvUserTest extends BaseTest
 
     public function testFullFieldsWithComments()
     {
-        $this->markTestIncomplete();
-
         // row factory mock
         $this->rowFactoryMock->expects($this->atLeastOnce())
             ->method('create')

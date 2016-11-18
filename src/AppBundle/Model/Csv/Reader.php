@@ -20,19 +20,9 @@ class Reader implements ReaderInterface
     private $rowFactory;
 
     /**
-     * @var string
+     * @var \SplFileObject
      */
-    private $delimiter;
-
-    /**
-     * @var string
-     */
-    private $enclosure;
-
-    /**
-     * @var resource
-     */
-    private $file;
+    private $splFileObject;
 
     /**
      * @var array
@@ -40,14 +30,9 @@ class Reader implements ReaderInterface
     private $header;
 
     /**
-     * @var int
-     */
-    private $position =  0;
-
-    /**
      * @var RowInterface
      */
-    private $row;
+    private $currentRow;
 
     /**
      * @param string                $path
@@ -61,23 +46,19 @@ class Reader implements ReaderInterface
         string              $delimiter = ',',
         string              $enclosure = '"'
     ) {
-        $this->rowFactory   = $rowFactory;
-        $this->delimiter    = $delimiter;
-        $this->enclosure    = $enclosure;
+        $this->rowFactory       = $rowFactory;
+        $this->splFileObject    = new \SplFileObject($path);
 
-        // file
-        $this->file = fopen($path, 'r+');
-        $this->setHeader();
+        $this->splFileObject->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
+        $this->splFileObject->setCsvControl($delimiter, $enclosure);
     }
 
     /**
-     * Free resource on destruct
+     * Free resource
      */
     public function __destruct()
     {
-        if (!is_null($this->file)) {
-            fclose($this->file);
-        }
+        $this->splFileObject= null;
     }
 
     /**
@@ -85,7 +66,7 @@ class Reader implements ReaderInterface
      */
     public function getDelimiter() : string
     {
-        return $this->delimiter;
+        return $this->splFileObject->getCsvControl()[0];
     }
 
     /**
@@ -93,7 +74,7 @@ class Reader implements ReaderInterface
      */
     public function getEnclosure() : string
     {
-        return $this->enclosure;
+        return $this->splFileObject->getCsvControl()[1];
     }
 
     /**
@@ -101,7 +82,18 @@ class Reader implements ReaderInterface
      */
     public function current()
     {
-        return $this->row;
+        // set header
+        if ($this->splFileObject->key() === 0) {
+            $this->setHeader();
+        }
+
+        // prevent creating row object for multiple current asking
+        if (is_null($this->currentRow)) {
+            $row = $this->splFileObject->current() ? : [];
+            $this->currentRow = $this->rowFactory->create($this->header, $row, $this->key());
+        }
+
+        return $this->currentRow;
     }
 
     /**
@@ -109,14 +101,8 @@ class Reader implements ReaderInterface
      */
     public function next()
     {
-        $row = $this->getRow();
-        if ($row === false) {
-            return false;
-        }
-
-        $this->row  = $this->rowFactory->create($this->header, $row, $this->position);
-
-        return true;
+        $this->currentRow = null;
+        $this->splFileObject->next();
     }
 
     /**
@@ -124,7 +110,7 @@ class Reader implements ReaderInterface
      */
     public function key()
     {
-        $this->position;
+        return $this->splFileObject->key();
     }
 
     /**
@@ -132,7 +118,7 @@ class Reader implements ReaderInterface
      */
     public function valid()
     {
-        return !feof($this->file);
+        return $this->splFileObject->valid();
     }
 
     /**
@@ -140,33 +126,7 @@ class Reader implements ReaderInterface
      */
     public function rewind()
     {
-        rewind($this->file);
-        $this->position = 0;
-
-        $this->getRow();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __debugInfo()
-    {
-        return [
-            $this->row,
-            $this->position
-        ];
-    }
-
-    /**
-     * Get row
-     *
-     * @return array
-     */
-    private function getRow() : array
-    {
-        $this->position ++;
-
-        return fgetcsv($this->file, null, $this->delimiter, $this->enclosure) ? : [];
+        $this->splFileObject->rewind();
     }
 
     /**
@@ -174,12 +134,13 @@ class Reader implements ReaderInterface
      */
     private function setHeader()
     {
-        $row = $this->getRow();
-        if (empty($this->header)) {
-
+        if (is_null($this->header)) {
+            $header = $this->splFileObject->current() ? : [];
             $this->header = array_map(function($item) {
-                return strtolower(trim(str_replace('#', '', $item)));
-            }, $row);
+                return strtolower(trim(preg_replace('/^[^A-Za-z]+/', '', $item)));
+            },  $header);
         }
+
+        $this->next();
     }
 }

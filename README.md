@@ -52,7 +52,7 @@ _Note_: command SHOULD be run inside `import-web` container.
 File format
 -----------
 File SHOULD has delimiter `,` with enclosure `"`.
-First row in csv file is a schema. The main point is a column name not an order. 
+First row in csv file is a schema. It is important the column name not an order. 
 
 Table bellow describes column name.
 
@@ -61,6 +61,10 @@ name/characteristics    | firstname | infix | lastname  | date of birth | gender
 required                | yes       | no    | no        | no            | no                | no                | no
 has normalizers         | no        | no    | no        | no            | tim, lowercase    | trim, uppercase   | no
 example                 | Nick      | ter   | Tester    | 1991-08-24    | m                 | 12010             | 9b 
+
+_Note_: column name SHOULD start form alphabetic character. It case if it's present some non alphabetic character it will be
+remove and application try to map columns with sanitized column name. For instance if the original column name `# firstname` 
+ImportCsvUser converts it to `firstname`.
 
 Skipped rows
 ------------
