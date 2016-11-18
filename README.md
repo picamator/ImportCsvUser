@@ -122,9 +122,13 @@ The data validators skip rows and write the report result with keeping process r
 
 There is a list of validators:
 
-* `firstname`: required
-* `gender`: empty, `m` or `f`
-* `birthday`: empty, or `yyyy-mm-dd`
+* `firstname`: required, max length 255
+* `infix`: max length 45
+* `lastname`: max length 255
+* `gender`: `m` or `f`
+* `birthday`: date `yyyy-mm-dd`
+* `zipcode`: max length 32
+* `housenumber`: max length 255
 
 Import result
 -------------
@@ -141,10 +145,10 @@ Here is a list of supported statistics:
 
 Documentation
 -------------
-1. Database EER: (import_csv_user.png)[doc/db/import_csv_user.png]
-2. Uml class diagram: (class.diagram.png)[doc/uml/class.diagram.png] 
-3. Ideas: (FUTURE.CANDIDATE.md)[FUTURE.CANDIDATE.md]
-4. CSV samples: (csv)[doc/csv]
+1. Database EER: [import_csv_user.png](doc/db/import_csv_user.png)
+2. Uml class diagram: [class.diagram.png](doc/uml/class.diagram.png) 
+3. Ideas: [FUTURE.CANDIDATE.md](FUTURE.CANDIDATE.md)
+4. CSV samples: [csv](doc/csv)
 
 Contribution
 ------------
